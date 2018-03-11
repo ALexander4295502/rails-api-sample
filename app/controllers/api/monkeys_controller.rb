@@ -1,12 +1,11 @@
-class Api::MonkeysController < ApplicationController
-  skip_before_filter :verify_authenticity_token
+class Api::MonkeysController < Api::ApiController
   def index
     render json: Monkey.all
   end
 
   def show
-    list = Monkey.find(params[:id])
-    render json: list
+    monkey = Monkey.find(params[:id])
+    render json: monkey.as_json(include: [:items])
   end
 
   def create
